@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>I Love U</title>
+    <style>
+      body {
+        background-image: url("hinhanh.jpg");
+        background-size: 100% 105%; /* Kích thước mặc định cho desktop */
+        background-position: center;
+        background-repeat: no-repeat;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        font-family: "Noto Sans", sans-serif;
+      }
+
+      /* Media query cho màn hình điện thoại */
+      @media only screen and (max-width: 768px) {
+        body {
+          background-size: cover; /* Sử dụng 'cover' để hình nền phủ toàn bộ màn hình điện thoại */
+        }
+      }
+
+      button {
+        font-size: 24px;
+        padding: 15px 30px;
+        background-color: #ffc0cb;
+        border: none;
+        cursor: pointer;
+        border-radius: 10px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .popup {
+        position: absolute;
+        width: 320px;
+        height: 160px;
+        background-color: #ffc0cb;
+        border: 2px solid #ff7f7f;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 16px;
+        font-style: italic;
+        font-family: "Noto Sans", sans-serif;
+        z-index: 2;
+      }
+    </style>
+  </head>
+  <body>
+    <button onclick="startExperience()">Anh muốn nói là...</button>
+
+    <script>
+      const audio = new Audio("tranbonho.mp3");
+
+      function getRandomPosition() {
+        const x = Math.random() * (window.innerWidth - 320);
+        const y = Math.random() * (window.innerHeight - 160);
+        return { x, y };
+      }
+
+      function createPopup() {
+        // Tạo popup chứa text
+        const textPopup = document.createElement("div");
+        textPopup.className = "popup";
+
+        const texts = ["Nhớ nhớ nhớ em!!!", "Anh yêu em!"];
+        const randomTextIndex = Math.floor(Math.random() * texts.length);
+        textPopup.textContent = texts[randomTextIndex];
+
+        // Vị trí ngẫu nhiên cho popup chứa text
+        const position = getRandomPosition();
+        textPopup.style.left = `${position.x}px`;
+        textPopup.style.top = `${position.y}px`;
+        document.body.appendChild(textPopup);
+
+        // Xóa popup text sau 2 giây
+        setTimeout(() => {
+          textPopup.remove();
+        }, 2000);
+
+        // Tạo popup chứa hình ảnh
+        const imagePopup = document.createElement("div");
+        imagePopup.className = "popup";
+
+        // Mảng chứa các hình ảnh
+        const images = ["1.jpg", "2.jpg", "3.jpg", "4.jpg"];
+        const randomImageIndex = Math.floor(Math.random() * images.length);
+
+        // Tạo thẻ <img> cho hình ảnh
+        const img = document.createElement("img");
+        img.src = images[randomImageIndex];
+        img.alt = "Heart Image";
+        img.style.width = "100px";
+        img.style.height = "100px";
+        img.style.display = "block";
+        img.style.margin = "0 auto";
+
+        // Thêm hình ảnh vào popup hình ảnh
+        imagePopup.appendChild(img);
+
+        // Vị trí ngẫu nhiên cho popup chứa hình ảnh
+        const imagePosition = getRandomPosition();
+        imagePopup.style.left = `${imagePosition.x}px`;
+        imagePopup.style.top = `${imagePosition.y}px`;
+        document.body.appendChild(imagePopup);
+
+        setTimeout(() => {
+          imagePopup.remove();
+        }, 2000);
+      }
+
+      function createPopups() {
+        const delay = 200;
+        const totalPopups = 85;
+        for (let i = 0; i < totalPopups; i++) {
+          setTimeout(createPopup, i * delay);
+        }
+      }
+
+      function startExperience() {
+        // Phát nhạc
+        audio.play();
+        // Tạo popup
+        createPopups();
+      }
+    </script>
+  </body>
+</html>
